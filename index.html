@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Electron App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <audio autoplay>
+        <source src="bg.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</head>
+
+<body>
+    
+    <div id="journalcontentdisplay" style="display: none;">
+        <button id="back" onclick="back()"><h3>Back</h3></button>
+        <button id="clear" onclick="clearJournal()">Clear Journal</button>
+        <ul id="journalList"></ul>
+        
+    </div>
+    <div id="journalcontent" style="display: none;">
+        <button id="back" onclick="back()"><h3>Back</h3></button>
+        <h1 id="titleh1_2"><u>Mood</u> Journal</h1>
+        <button type="submit" onclick="saveJournalFromTextarea()">Submit</button>
+        <button onclick="displayJournal()">Display Journal</button>
+        <center><textarea id="textbox" placeholder="What's on your mind right now?" rows="4" cols="50"></textarea></center>
+    
+    </div>
+    <div id="trackercontentdisplay" style="display: none;">
+        <button id="back" onclick="back()"><h3>Back</h3></button>
+        <button id="clearMoodsBtn" onclick="clearMoods()"><h3>Clear Moods</h3></button>
+        <ul id="moodList"></ul>
+    
+    </div>
+    <div id="trackercontent" style="display: none;">
+        <button id="back" onclick="back()"><h3>Back</h3></button>
+        <button id="displayMoodsBtn" onclick="displayMoods()">Display Moods</button>
+        <h1 id="titleh1_2"><u>Mood</u> Tracker</h1>
+        <center>
+            <h2>How are you feeling today?</h2>
+            <button id="happy" onclick="saveMood('happy')"><h1>😀</h1><figcaption><p>Happy</p></figcaption></button>
+            <button id="ok" onclick="saveMood('ok')"><h1>👌</h1><figcaption><p>Ok</p></figcaption></button>
+            <button id="meh" onclick="saveMood('meh')"><h1>😕</h1><figcaption><p>Meh</p></figcaption></button>
+            <button id="sad" onclick="saveMood('sad')"><h1>😔</h1><figcaption><p>Sad</p></figcaption></button>
+            <button id="depressed" onclick="saveMood('depressed')"><h1>😭</h1><figcaption><p>Depressed</p></figcaption></button>
+        </center>
+        
+    </div>
+    <div id="root">
+        <h1 id="titleh1"><u>Mood</u> Haven</h1>
+        <p id="desc_p"></p>
+        
+        <button id="tracker" onclick="tracker()">Mood Tracker</button><br>
+        <button id="journal" onclick="journal()">Mood Journal</button><br>
+        <button id="todo" onclick="todo()">My To-do List</button><br>
+        <button id="plans" onclick="plans()">My Planner</button><br>
+        <button id="bucketlist" onclick="bucketlist()">My Bucketlists</button>
+    
+    </div>
+    <script>
+        function clearJournal() {
+         localStorage.removeItem('journals');
+            // Optionally, you can clear the displayed moods as well
+         var journalList = document.getElementById('journalList');
+         journalList.innerHTML = ''; 
+       }
+        function saveJournalFromTextarea() {
+            // Get the textarea element
+            var textarea = document.getElementById('textbox');
+
+            // Get the value of the textarea (the journal text)
+            var journalText = textarea.value;
+
+            // Call the saveJournal function with the journal text
+            saveJournal(journalText);
+        }
+
+        function saveJournal(journalText) {
+            // Get existing journals from localStorage or initialize an empty array
+            var journals = JSON.parse(localStorage.getItem('journals')) || [];
+
+            // Push the new journal text to the array
+            journals.push(journalText);
+
+            // Save the updated array back to localStorage
+            localStorage.setItem('journals', JSON.stringify(journals));
+        }
+       function displayJournal(){
+        document.getElementById('journalcontent').style.display = "none";
+        document.getElementById('journalcontentdisplay').style.display = "block";
+       
+       var journalList = document.getElementById("journalList");
+         journalList.innerHTML = "";
+
+         var journals = JSON.parse(localStorage.getItem('journals')) || [];
+         journals.forEach(function(journal){
+            var li = document.createElement('li');
+            li.textContent = journal; 
+            journalList.appendChild(li); 
+        })
+    } 
+       function clearMoods() {
+         localStorage.removeItem('moods');
+            // Optionally, you can clear the displayed moods as well
+         var moodList = document.getElementById('moodList');
+         moodList.innerHTML = ''; 
+       }
+       function saveMood(mood) {
+         var moods = JSON.parse(localStorage.getItem('moods')) || [];
+         moods.push(mood);
+         localStorage.setItem('moods', JSON.stringify(moods)); 
+       }
+       function displayMoods(){
+         document.getElementById("trackercontent").style.display = "none"; 
+         document.getElementById("trackercontentdisplay").style.display = "block";
+
+         var moodList = document.getElementById("moodList");
+         moodList.innerHTML = "";
+
+         var moods = JSON.parse(localStorage.getItem('moods')) || [];
+         moods.forEach(function(mood){
+            var li = document.createElement('li');
+            li.textContent = mood; 
+            moodList.appendChild(li); 
+        })
+        
+    }
+       function back(){
+        document.getElementById("trackercontent").style.display = "none";
+        document.getElementById("root").style.display = "block"; 
+        document.getElementById("trackercontentdisplay").style.display = "none";
+        document.getElementById("journalcontent").style.display = "none";
+        document.getElementById("journalcontentdisplay").style.display = "none";
+       }
+       function tracker(){
+        document.getElementById("root").style.display = "none";
+        document.getElementById("trackercontent").style.display = "block";
+        document.getElementById("trackercontentdisplay").style.display = "none";
+        
+       }
+
+       function journal(){
+        document.getElementById("root").style.display = "none";
+        document.getElementById("journalcontent").style.display = "block"; 
+       }
+
+       function todo(){
+        document.getElementById("root").style.display = "none";
+       }
+    
+       function plans(){
+        document.getElementById("root").style.display = "none";
+       }
+
+       function bucketlist(){
+        document.getElementById("root").style.display = "none";
+       }
+       
+       window.onload = function() {
+    // Typewriter effect for description paragraph
+    const text = "Create a safe space for yourself and the things you love.";
+    let index = 0; 
+    const speed = 100; 
+
+    function typeWriter() {
+        if (index < text.length) {
+            document.getElementById("desc_p").innerHTML += text.charAt(index);
+            index++; 
+            setTimeout(typeWriter, speed);
+        }
+    }
+
+    // Start the typewriter effect when the window loads
+    typeWriter();
+
+    // Fade-in effect for title h1
+    setTimeout(function() {
+        document.getElementById('titleh1').classList.add('active');
+    }, 1000); // Adjust the delay (in milliseconds) as needed
+};
+    </script>
+    <script src="index.js"></script>
+</body>
+</html>

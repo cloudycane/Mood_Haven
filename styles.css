@@ -1,0 +1,73 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Ensure full viewport height */
+    background: url(img/wallpaper.jpg);
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+}
+#titleh1, #titleh1_2{
+    margin-right: 3%;
+    text-align: right;
+    font-size: 68px;
+    color: white;
+    font-weight: lighter;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+#titleh1.active, #titleh1_2{
+    opacity: 1;
+}
+#desc_p, #desc_p_2 {
+    margin-right: 3%;
+    color: white;
+    text-align: right;
+    font-size: 15px;
+}
+button{
+    display: inline-block;
+    padding: 10px 20px;
+    margin-left: 8%;
+    margin-bottom: 2%; 
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 30px; /* Adjust the border-radius to control the roundness of the button */
+    background-color: #6c5ce7; /* Main button color */
+    box-shadow: 0 4px 8px rgba(108, 92, 231, 0.3); /* Optional box shadow for depth */
+
+    /* Gradient background */
+    background-image: linear-gradient(45deg, #6c5ce7, #ff73b3);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #4d94ff; /* Lightened background color */ /* Adjust hover color */
+    transform: translateY(-5px); /* Add slight lift on hover */
+    cursor: url('star.png'), auto; /* Custom cursor */
+    
+}
+
+button:focus {
+    outline: none;
+}
+
+#month{
+    margin-left: 3%;
+    padding: 4px;
+}
+#happy, #ok, #meh, #sad, #depressed{
+    margin: 2px;
+}
+#back{
+    margin: 2%;
+    margin-bottom: 0%;
+}
+#textbox{
+    margin: auto;
+    margin-top: 0%;
+    padding: 50px;
+}
